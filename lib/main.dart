@@ -36,7 +36,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
   List<Map<String, dynamic>> employee = [];
   void refresh() async {
     final data = await SQLHelper.getEmployee();
@@ -54,64 +53,64 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("EMPLOYEE"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const InputPage(
-                    title: 'INPUT EMPLOYEE',
-                    id: null,
-                    name: null,
-                    email: null,
-                    kelamin: null)),
-              ).then((_) => refresh());
-            }),
-            IconButton(icon: Icon(Icons.clear), onPressed: () async {})
-        ],
-      ),
-      body: ListView.builder(
-        itemCount: employee.length,
-        itemBuilder: (context, index) {
-          return Slidable(
-            child: ListTile(
-              title: Text(employee[index]['name']),
-              subtitle: Text(employee[index]['email']),
-            ),
-            actionPane: SlidableDrawerActionPane(),
-            secondaryActions: [
-              IconSlideAction(
-                caption: 'Update',
-                color: Colors.blue,
-                icon: Icons.update,
-                onTap: () async {
+        appBar: AppBar(
+          title: Text("EMPLOYEE"),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () async {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => InputPage(
-                        title: 'INPUT EMPLOYEE',
-                        id: employee[index]['id'], 
-                        name: employee[index]['name'], 
-                        email: employee[index]['email'],
-                        kelamin: employee[index]['email'])),
+                        builder: (context) => const InputPage(
+                            title: 'INPUT EMPLOYEE',
+                            id: null,
+                            name: null,
+                            email: null,
+                            kelamin: null)),
                   ).then((_) => refresh());
-                },
-              ),
-              IconSlideAction(
-                caption: 'Delete',
-                color: Colors.red,
-                icon: Icons.delete,
-                onTap: () async {
-                  await deleteEmployee(employee[index]['id']);
-                },
-              )
-            ]
-          );
-        }));
+                }),
+            IconButton(icon: Icon(Icons.clear), onPressed: () async {})
+          ],
+        ),
+        body: ListView.builder(
+            itemCount: employee.length,
+            itemBuilder: (context, index) {
+              return Slidable(
+                  child: ListTile(
+                    title: Text(employee[index]['name']),
+                    subtitle: Text(
+                        employee[index]['email'] + employee[index]['kelamin']),
+                  ),
+                  actionPane: SlidableDrawerActionPane(),
+                  secondaryActions: [
+                    IconSlideAction(
+                      caption: 'Update',
+                      color: Colors.blue,
+                      icon: Icons.update,
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => InputPage(
+                                  title: 'INPUT EMPLOYEE',
+                                  id: employee[index]['id'],
+                                  name: employee[index]['name'],
+                                  email: employee[index]['email'],
+                                  kelamin: employee[index]['kelamin'])),
+                        ).then((_) => refresh());
+                      },
+                    ),
+                    IconSlideAction(
+                        caption: 'Delete',
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        onTap: () async {
+                          await deleteEmployee(employee[index]['id'])
+                              .then((_) => refresh());
+                        })
+                  ]);
+            }));
   }
 
   Future<void> deleteEmployee(int id) async {

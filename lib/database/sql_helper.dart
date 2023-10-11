@@ -16,10 +16,11 @@ class SQLHelper {
     return sql.openDatabase('employee.db', version: 1,
         onCreate: (sql.Database database, int version) async {
       await createTables(database);
-      });
+    });
   }
 
-  static Future<int> addEmployee(String name, String email, String kelamin) async {
+  static Future<int> addEmployee(
+      String name, String email, String kelamin) async {
     final db = await SQLHelper.db();
     final data = {'name': name, 'email': email, 'kelamin': kelamin};
     return await db.insert('employee', data);
@@ -29,8 +30,9 @@ class SQLHelper {
     final db = await SQLHelper.db();
     return db.query('employee');
   }
-  
-  static Future<int> editEmployee(int id, String name, String email, String kelamin) async {
+
+  static Future<int> editEmployee(
+      int id, String name, String email, String kelamin) async {
     final db = await SQLHelper.db();
     final data = {'name': name, 'email': email, 'kelamin': kelamin};
     return await db.update('employee', data, where: "id = $id");
@@ -38,6 +40,6 @@ class SQLHelper {
 
   static Future<int> deleteEmployee(int id) async {
     final db = await SQLHelper.db();
-    return db.delete('employee', where: "id = $id");
+    return db.delete('employee', where: "id=$id");
   }
 }
