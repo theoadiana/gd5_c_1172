@@ -67,7 +67,8 @@ class _HomePageState extends State<HomePage> {
                     title: 'INPUT EMPLOYEE',
                     id: null,
                     name: null,
-                    email: null)),
+                    email: null,
+                    kelamin: null)),
               ).then((_) => refresh());
             }),
             IconButton(icon: Icon(Icons.clear), onPressed: () async {})
@@ -95,7 +96,8 @@ class _HomePageState extends State<HomePage> {
                         title: 'INPUT EMPLOYEE',
                         id: employee[index]['id'], 
                         name: employee[index]['name'], 
-                        email: employee[index]['email'])),
+                        email: employee[index]['email'],
+                        kelamin: employee[index]['email'])),
                   ).then((_) => refresh());
                 },
               ),

@@ -6,7 +6,8 @@ class SQLHelper {
       CREATE TABLE employee(
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         name TEXT,
-        email TEXT
+        email TEXT,
+        kelamin TEXT
       )
     """);
   }
@@ -18,9 +19,9 @@ class SQLHelper {
       });
   }
 
-  static Future<int> addEmployee(String name, String email) async {
+  static Future<int> addEmployee(String name, String email, String kelamin) async {
     final db = await SQLHelper.db();
-    final data = {'name': name, 'email': email};
+    final data = {'name': name, 'email': email, 'kelamin': kelamin};
     return await db.insert('employee', data);
   }
 
@@ -29,9 +30,9 @@ class SQLHelper {
     return db.query('employee');
   }
   
-  static Future<int> editEmployee(int id, String name, String email) async {
+  static Future<int> editEmployee(int id, String name, String email, String kelamin) async {
     final db = await SQLHelper.db();
-    final data = {'name': name, 'email': email};
+    final data = {'name': name, 'email': email, 'kelamin': kelamin};
     return await db.update('employee', data, where: "id = $id");
   }
 
